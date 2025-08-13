@@ -12,15 +12,14 @@ from data_utils import DispatchGraphDataset, data_preparation, construct_graph_d
 import pickle
 
 # 1. 数据读取与特征构造,保存编码器和标准化器
-input_csv = "data_train_1.csv"
-# df = data_preparation(input_csv)
+input_csv = "data_train.csv"
 df_train, le_target, le_truck, scaler = data_preparation(input_csv, fit=True)
 # 保存编码器和标准化器
-with open('model_1/le_target.pkl', 'wb') as f:
+with open('model/le_target.pkl', 'wb') as f:
     pickle.dump(le_target, f)
-with open('model_1/le_truck.pkl', 'wb') as f:
+with open('model/le_truck.pkl', 'wb') as f:
     pickle.dump(le_truck, f)
-with open('model_1/scaler.pkl', 'wb') as f:
+with open('model/scaler.pkl', 'wb') as f:
     pickle.dump(scaler, f)
 
 # 2. 图数据构建
@@ -88,10 +87,10 @@ for epoch in range(max_epochs):
     print(f"Epoch {epoch+1}, Loss: {loss:.4f}, Train Acc: {train_acc:.4f}, Test Acc: {test_acc:.4f}")
     if test_acc > best_acc:
         best_acc = test_acc
-        torch.save(model.state_dict(), "model_1/best_dispatch_gnn.pt")
-        print(f"保存当前最优模型到 model_1/best_dispatch_gnn.pt")
-torch.save(model.state_dict(), "model_1/last_dispatch_gnn.pt")
-print(f"保存最后一次训练模型到 model_1/last_dispatch_gnn.pt")
+        torch.save(model.state_dict(), "model/best_dispatch_gnn.pt")
+        print(f"保存当前最优模型到 model/best_dispatch_gnn.pt")
+torch.save(model.state_dict(), "model/last_dispatch_gnn.pt")
+print(f"保存最后一次训练模型到 model/last_dispatch_gnn.pt")
 
 # 7. 绘制训练和测试准确率随训练轮次变化的图像
 plt.figure(figsize=(10,6))
@@ -102,4 +101,4 @@ plt.ylabel('Accuracy')
 plt.title('Train/Test Accuracy Curve')
 plt.legend()
 plt.grid(True)
-plt.savefig('model_1/accuracy_curve.png')
+plt.savefig('model/accuracy_curve.png')
