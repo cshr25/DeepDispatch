@@ -7,7 +7,7 @@ from data_utils import DispatchGraphDataset, data_preparation, construct_graph_d
 import pickle
 import matplotlib.pyplot as plt
 
-input_csv = "data_test_4.csv"
+input_csv = "data_test.csv"
 os.makedirs('result', exist_ok=True)
 
 # 1. 数据读取与特征构造
