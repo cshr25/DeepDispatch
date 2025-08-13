@@ -8,14 +8,15 @@ import pickle
 import matplotlib.pyplot as plt
 
 input_csv = "data_test_4.csv"
+os.makedirs('result', exist_ok=True)
 
 # 1. 数据读取与特征构造
 # 加载编码器和标准化器
-with open('model_2/le_target.pkl', 'rb') as f:
+with open('model/le_target.pkl', 'rb') as f:
     le_target = pickle.load(f)
-with open('model_2/le_truck.pkl', 'rb') as f:
+with open('model/le_truck.pkl', 'rb') as f:
     le_truck = pickle.load(f)
-with open('model_2/scaler.pkl', 'rb') as f:
+with open('model/scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 df_test = data_preparation(input_csv, le_target, le_truck, scaler, fit=False)
 
@@ -45,30 +46,6 @@ total = 0
 correct = 0
 sample_acc_list = []
 
-# with torch.no_grad():
-#     for idx, data in enumerate(test_loader_new):
-#         data = data.to(device)
-#         outputs = model(data)
-#         pred = outputs.argmax(dim=1).cpu().numpy()
-#         truck_ids = le_truck.inverse_transform(data.truck_indices.cpu().numpy())
-#         target_names = le_target.inverse_transform(pred)
-#         true_targets = le_target.inverse_transform(data.y.cpu().numpy())
-#         sample_total = len(truck_ids)
-#         sample_correct = sum(tname == ttrue for tname, ttrue in zip(target_names, true_targets))
-#         sample_acc = sample_correct / sample_total if sample_total > 0 else 0
-#         sample_acc_list.append(sample_acc)
-#         print(f"样本{idx}:")
-#         for tid, tname, ttrue in zip(truck_ids, target_names, true_targets):
-#             print(f"  车辆ID: {tid}，预测下一个终点: {tname}，真实终点: {ttrue}")
-#         print(f"  样本准确率: {sample_acc:.4f}")
-#         total += sample_total
-#         correct += sample_correct
-
-# overall_acc = correct / total if total > 0 else 0
-# output_lines.append(f"整体预测准确率: {overall_acc:.4f}")
-
-# print(f"整体预测准确率: {overall_acc:.4f}")
-
 with torch.no_grad():
     for idx, data in enumerate(test_loader_new):
         data = data.to(device)
@@ -90,7 +67,7 @@ with torch.no_grad():
 
 overall_acc = correct / total if total > 0 else 0
 output_lines.append(f"整体预测准确率: {overall_acc:.4f}")
-with open('result/model2_testdata1_result.txt', 'w', encoding='utf-8') as f:
+with open('result/model_testdata_result.txt', 'w', encoding='utf-8') as f:
     for line in output_lines:
         f.write(line + '\n')
 print(f"整体预测准确率: {overall_acc:.4f}")
@@ -105,5 +82,5 @@ plt.xlabel('sample_ID')
 plt.ylabel('sample_accuracy')
 plt.title('Prediction accuracy distribution across samples')
 plt.legend()
-plt.savefig('result/model2_testdata4.png')
+plt.savefig('result/mode_testdata.png')
 plt.show()
