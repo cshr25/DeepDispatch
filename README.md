@@ -7,6 +7,7 @@
 ```
 .
 ├── GNN_train.py                # 训练主程序
+├── GNN_train2.py               # 训练主程序（更新）
 ├── GNN_test.py                 # 测试主程序
 ├── model.py                    # GNN模型定义
 ├── data_utils.py               # 数据处理与图数据构建
@@ -80,3 +81,4 @@ python GNN_test.py
 
 ## 更新日志
 - 2025年8月13日，上传该分支的第一版代码。
+- 2025年8月15日，上传GNN_train2.py，修改车辆特征、自定义损失函数、增加更多的评估指标
